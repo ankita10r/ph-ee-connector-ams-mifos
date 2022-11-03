@@ -342,7 +342,12 @@ public class ZeebeeWorkers {
                                 ex.setProperty(PARTY_ID_TYPE, partyIdType);
                                 ex.setProperty(PARTY_ID, partyId);
                                 ex.setProperty(ZEEBE_JOB_KEY, job.getKey());
-                                ex.setProperty(TENANT_ID, tenantId);
+                                if(dfspid.equalsIgnoreCase(existingVariables.get("payeeTenantId").toString()))
+                                {
+                                    ex.setProperty(TENANT_ID, existingVariables.get("payeeTenantId"));
+                                }
+                                else {
+                                ex.setProperty(TENANT_ID, tenantId);}
                                 ex.setProperty("payeeTenantId",existingVariables.get("payeeTenantId"));
 
                                 producerTemplate.send("direct:get-party", ex);
